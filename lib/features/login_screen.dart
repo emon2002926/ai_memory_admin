@@ -3,12 +3,13 @@ import 'package:get/get.dart';
 import 'brand.dart';
 import 'login_controller.dart';
 
+
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final c = Get.put(LoginController());
+    final c = Get.put(LoginController(), permanent: true);
 
     return AuthScaffold(
       children: [
@@ -51,7 +52,7 @@ class LoginScreen extends StatelessWidget {
         ),
         const SizedBox(height: 10),
         Obx(
-          () => BrandField(
+              () => BrandField(
             controller: c.passwordController,
             hintText: 'Enter your password',
             obscureText: c.obscure.value,
@@ -76,7 +77,7 @@ class LoginScreen extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Obx(
-                    () => Container(
+                        () => Container(
                       width: 22,
                       height: 22,
                       decoration: BoxDecoration(
@@ -87,7 +88,7 @@ class LoginScreen extends StatelessWidget {
                       ),
                       child: c.remember.value
                           ? const Icon(Icons.check,
-                              size: 16, color: Color(0xFFFFFFFF))
+                          size: 16, color: Color(0xFFFFFFFF))
                           : null,
                     ),
                   ),

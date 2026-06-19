@@ -11,7 +11,7 @@ class AdministratorsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final c = Get.put(AdministratorsController());
+    final c = Get.put(AdministratorsController(), permanent: true);
 
     return SingleChildScrollView(
       padding: const EdgeInsets.all(24),
@@ -58,7 +58,7 @@ class AdministratorsScreen extends StatelessWidget {
             LayoutBuilder(
               builder: (context, constraints) {
                 final tableWidth =
-                    constraints.maxWidth > 1100 ? constraints.maxWidth : 1100.0;
+                constraints.maxWidth > 1100 ? constraints.maxWidth : 1100.0;
                 return SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: SizedBox(
@@ -69,7 +69,7 @@ class AdministratorsScreen extends StatelessWidget {
                         _headerRow(),
                         const SizedBox(height: 8),
                         Obx(
-                          () => Column(
+                              () => Column(
                             children: [
                               for (int i = 0; i < c.admins.length; i++)
                                 _dataRow(c, i),
@@ -120,13 +120,13 @@ class AdministratorsScreen extends StatelessWidget {
   Widget _dataRow(AdministratorsController c, int i) {
     final a = c.admins[i];
     Widget cell(String t, int flex) => Expanded(
-          flex: flex,
-          child: AppText(
-            data: t,
-            fontSize: 15,
-            color: const Color(0xFFD7D7DD),
-          ),
-        );
+      flex: flex,
+      child: AppText(
+        data: t,
+        fontSize: 15,
+        color: const Color(0xFFD7D7DD),
+      ),
+    );
 
     Widget actionBtn(IconData icon, Color color, VoidCallback onTap) {
       return InkWell(
@@ -162,10 +162,10 @@ class AdministratorsScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 actionBtn(Icons.edit_outlined, const Color(0xFF15803D),
-                    () => c.onEdit(i)),
+                        () => c.onEdit(i)),
                 const SizedBox(width: 12),
                 actionBtn(Icons.delete_outline, const Color(0xFFB91C1C),
-                    () => c.confirmRemove(i)),
+                        () => c.confirmRemove(i)),
               ],
             ),
           ),

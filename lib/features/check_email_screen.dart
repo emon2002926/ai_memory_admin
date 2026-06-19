@@ -4,12 +4,14 @@ import 'package:get/get.dart';
 import 'brand.dart';
 import 'check_email_controller.dart';
 
+
+
 class CheckEmailScreen extends StatelessWidget {
   CheckEmailScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final c = Get.put(CheckEmailController());
+    final c = Get.put(CheckEmailController(), permanent: true);
 
     return AuthScaffold(
       children: [
@@ -25,7 +27,7 @@ class CheckEmailScreen extends StatelessWidget {
         const SizedBox(height: 16),
         AppText(
           data:
-              'We sent a code to your email address. Please check your email for the 5 digit code.',
+          'We sent a code to your email address. Please check your email for the 5 digit code.',
           fontSize: 16,
           color: const Color(0xFFD7D7DD),
           textAlign: TextAlign.center,
@@ -60,12 +62,12 @@ class CheckEmailScreen extends StatelessWidget {
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
                         borderSide:
-                            const BorderSide(color: Color(0xFF3A3A45)),
+                        const BorderSide(color: Color(0xFF3A3A45)),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
                         borderSide:
-                            const BorderSide(color: Color(0xFF5B7BF5)),
+                        const BorderSide(color: Color(0xFF5B7BF5)),
                       ),
                     ),
                   ),

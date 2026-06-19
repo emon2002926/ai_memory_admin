@@ -4,12 +4,13 @@ import '../core/widgets/text/app_text.dart';
 import 'brand.dart' hide AppText;
 import 'set_new_password_controller.dart';
 
+
 class SetNewPasswordScreen extends StatelessWidget {
   SetNewPasswordScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final c = Get.put(SetNewPasswordController());
+    final c = Get.put(SetNewPasswordController(), permanent: true);
 
     return AuthScaffold(
       children: [
@@ -37,7 +38,7 @@ class SetNewPasswordScreen extends StatelessWidget {
         ),
         const SizedBox(height: 10),
         Obx(
-          () => BrandField(
+              () => BrandField(
             controller: c.passwordController,
             hintText: 'Enter new password',
             obscureText: c.obscurePassword.value,
@@ -60,7 +61,7 @@ class SetNewPasswordScreen extends StatelessWidget {
         ),
         const SizedBox(height: 10),
         Obx(
-          () => BrandField(
+              () => BrandField(
             controller: c.confirmController,
             hintText: 'Re-enter new password',
             obscureText: c.obscureConfirm.value,

@@ -1,7 +1,9 @@
+import 'package:ai_memory_admin/features/profile_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-
+import 'package:get/get.dart';
 import 'brand.dart';
+
 
 class AdminShell extends StatelessWidget {
   final StatefulNavigationShell navigationShell;
@@ -11,6 +13,7 @@ class AdminShell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Get.put(ProfileController(), permanent: true);
     final isMobile = MediaQuery.of(context).size.width < mobileBreakpoint;
 
     if (isMobile) {
@@ -155,62 +158,81 @@ class _TopBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final chip = Container(
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-      decoration: BoxDecoration(
-        color: const Color(0xFF0A0A0E),
-        borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: const Color(0xFF2A2A32)),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            width: 44,
-            height: 44,
-            decoration: BoxDecoration(
-              gradient: kBrandGradient,
-              shape: BoxShape.circle,
-            ),
-            alignment: Alignment.center,
-            child: AppText(
-              data: 'MR',
-              fontSize: 16,
-              fontWeight: FontWeight.w700,
-              color: const Color(0xFFFFFFFF),
-            ),
-          ),
-          const SizedBox(width: 12),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              AppText(
-                data: 'Moni Roy',
-                fontSize: 15,
-                fontWeight: FontWeight.w700,
-                color: const Color(0xFFFFFFFF),
+    final c = Get.find<ProfileController>();
+
+    final chip = InkWell(
+      onTap: c.openMenu,
+      borderRadius: BorderRadius.circular(14),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+        decoration: BoxDecoration(
+          color: const Color(0xFF0A0A0E),
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(color: const Color(0xFF2A2A32)),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Obx(
+                  () => Container(
+                width: 44,
+                height: 44,
+                decoration: BoxDecoration(
+                  gradient: c.avatarUrl.value.isEmpty ? kBrandGradient : null,
+                  shape: BoxShape.circle,
+                  image: c.avatarUrl.value.isEmpty
+                      ? null
+                      : DecorationImage(
+                      image: NetworkImage(c.avatarUrl.value),
+                      fit: BoxFit.cover),
+                ),
+                alignment: Alignment.center,
+                child: c.avatarUrl.value.isEmpty
+                    ? AppText(
+                  data: c.initials,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                  color: const Color(0xFFFFFFFF),
+                )
+                    : null,
               ),
-              AppText(
-                data: 'Super Admin',
-                fontSize: 13,
-                color: const Color(0xFF8A8A93),
-              ),
-            ],
-          ),
-          const SizedBox(width: 14),
-          Container(
-            width: 26,
-            height: 26,
-            decoration: BoxDecoration(
-              color: const Color(0xFF16161C),
-              shape: BoxShape.circle,
-              border: Border.all(color: const Color(0xFF2A2A32)),
             ),
-            child: const Icon(Icons.keyboard_arrow_down,
-                size: 18, color: Color(0xFFD7D7DD)),
-          ),
-        ],
+            const SizedBox(width: 12),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Obx(
+                      () => AppText(
+                    data: c.name.value,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w700,
+                    color: const Color(0xFFFFFFFF),
+                  ),
+                ),
+                Obx(
+                      () => AppText(
+                    data: c.role.value,
+                    fontSize: 13,
+                    color: const Color(0xFF8A8A93),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(width: 14),
+            Container(
+              width: 26,
+              height: 26,
+              decoration: BoxDecoration(
+                color: const Color(0xFF16161C),
+                shape: BoxShape.circle,
+                border: Border.all(color: const Color(0xFF2A2A32)),
+              ),
+              child: const Icon(Icons.keyboard_arrow_down,
+                  size: 18, color: Color(0xFFD7D7DD)),
+            ),
+          ],
+        ),
       ),
     );
 
